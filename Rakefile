@@ -42,35 +42,35 @@ end
 
 desc "Runs tests with code mutation"
 task :mutate do
-  require "array_like"
-  require "mutant"
-
-  Dir[File.expand_path("../lib/array_like/*.rb", __FILE__)].each do |path|
-    require "array_like/#{File.basename(path, ".rb")}"
-  end
-
-  config = {}
-  def config.method_missing(sym)
-    self[sym]
-  end
-
-  config.merge!(
-    strategy: Mutant::Strategy::Rspec::DM2.new(config),
-    killer:   Mutant::Killer::Rspec,
-    matcher:  Mutant::Matcher::ObjectSpace.new(/\AArrayLike::/),
-    filter:   Mutant::Mutation::Filter::ALL,
-    reporter: Mutant::Reporter::CLI.new(config),
-  )
-
-  task_index = ARGV.index("mutate")
-  if task_index && matcher = ARGV[task_index + 1]
-    config[:matcher] = Mutant::Matcher.from_string("::ArrayLike::#{matcher}")
-  end
-
+  # If Mutant failed to properly run; we do not treat it as an error.
   begin
+    require "array_like"
+    require "mutant"
+
+    Dir[File.expand_path("../lib/array_like/*.rb", __FILE__)].each do |path|
+      require "array_like/#{File.basename(path, ".rb")}"
+    end
+
+    config = {}
+    def config.method_missing(sym)
+      self[sym]
+    end
+
+    config.merge!(
+      strategy: Mutant::Strategy::Rspec::DM2.new(config),
+      killer:   Mutant::Killer::Rspec,
+      matcher:  Mutant::Matcher::ObjectSpace.new(/\AArrayLike::/),
+      filter:   Mutant::Mutation::Filter::ALL,
+      reporter: Mutant::Reporter::CLI.new(config),
+    )
+
+    task_index = ARGV.index("mutate")
+    if task_index && matcher = ARGV[task_index + 1]
+      config[:matcher] = Mutant::Matcher.from_string("::ArrayLike::#{matcher}")
+    end
+
     exit Mutant::Runner.run(config).fail? ? 1 : 0
   rescue
-    # If Mutant failed to properly run; we do not treat it as an error.
     puts "Mutant failed to run: #{$!}:\n  #{$!.backtrace.join("\n  ")}"
   end
 end
