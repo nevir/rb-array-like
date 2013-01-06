@@ -67,5 +67,10 @@ task :mutate do
     config[:matcher] = Mutant::Matcher.from_string("::ArrayLike::#{matcher}")
   end
 
-  exit Mutant::Runner.run(config).fail? ? 1 : 0
+  begin
+    exit Mutant::Runner.run(config).fail? ? 1 : 0
+  rescue
+    # If Mutant failed to properly run; we do not treat it as an error.
+    puts "Mutant failed to run: #{$!}:\n  #{$!.backtrace.join("\n  ")}"
+  end
 end
