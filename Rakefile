@@ -12,6 +12,7 @@ end
 desc "Run the tests in CI mode"
 task :ci do
   Rake::Task["spec"].execute
+  Rake::Task["mutate"].execute
 end
 
 desc "Run tests with code coverage"
@@ -49,6 +50,10 @@ task :mutate do
   end
 
   config = {}
+  def config.method_missing(sym)
+    self[sym]
+  end
+
   config.merge!(
     strategy: Mutant::Strategy::Rspec::DM2.new(config),
     killer:   Mutant::Killer::Rspec,
@@ -57,12 +62,9 @@ task :mutate do
     reporter: Mutant::Reporter::CLI.new(config),
   )
 
-  unless ARGV.last == "mutate"
-    config[:matcher] = Mutant::Matcher.from_string("::ArrayLike::#{ARGV.pop}")
-  end
-
-  def config.method_missing(sym)
-    self[sym]
+  task_index = ARGV.index("mutate")
+  if task_index && matcher = ARGV[task_index + 1]
+    config[:matcher] = Mutant::Matcher.from_string("::ArrayLike::#{matcher}")
   end
 
   exit Mutant::Runner.run(config).fail? ? 1 : 0
