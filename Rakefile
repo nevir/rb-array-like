@@ -12,7 +12,11 @@ end
 desc "Run the tests in CI mode"
 task :ci do
   Rake::Task["spec"].execute
-  Rake::Task["mutate"].execute
+
+  # Skip if we're in JRuby or Ruby 2.0 (mutant doesn't support 'em)
+  unless RUBY_VERSION.start_with?("2.") || RUBY_PLATFORM.include?("java")
+    Rake::Task["mutate"].execute
+  end
 end
 
 desc "Run tests with code coverage"
@@ -42,35 +46,30 @@ end
 
 desc "Runs tests with code mutation"
 task :mutate do
-  # If Mutant failed to properly run; we do not treat it as an error.
-  begin
-    require "array_like"
-    require "mutant"
+  require "array_like"
+  require "mutant"
 
-    Dir[File.expand_path("../lib/array_like/*.rb", __FILE__)].each do |path|
-      require "array_like/#{File.basename(path, ".rb")}"
-    end
-
-    config = {}
-    def config.method_missing(sym)
-      self[sym]
-    end
-
-    config.merge!(
-      strategy: Mutant::Strategy::Rspec::DM2.new(config),
-      killer:   Mutant::Killer::Rspec,
-      matcher:  Mutant::Matcher::ObjectSpace.new(/\AArrayLike::/),
-      filter:   Mutant::Mutation::Filter::ALL,
-      reporter: Mutant::Reporter::CLI.new(config),
-    )
-
-    task_index = ARGV.index("mutate")
-    if task_index && matcher = ARGV[task_index + 1]
-      config[:matcher] = Mutant::Matcher.from_string("::ArrayLike::#{matcher}")
-    end
-
-    exit Mutant::Runner.run(config).fail? ? 1 : 0
-  rescue
-    puts "Mutant failed to run: #{$!}:\n  #{$!.backtrace.join("\n  ")}"
+  Dir[File.expand_path("../lib/array_like/*.rb", __FILE__)].each do |path|
+    require "array_like/#{File.basename(path, ".rb")}"
   end
+
+  config = {}
+  def config.method_missing(sym)
+    self[sym]
+  end
+
+  config.merge!(
+    strategy: Mutant::Strategy::Rspec::DM2.new(config),
+    killer:   Mutant::Killer::Rspec,
+    matcher:  Mutant::Matcher::ObjectSpace.new(/\AArrayLike::/),
+    filter:   Mutant::Mutation::Filter::ALL,
+    reporter: Mutant::Reporter::CLI.new(config),
+  )
+
+  task_index = ARGV.index("mutate")
+  if task_index && matcher = ARGV[task_index + 1]
+    config[:matcher] = Mutant::Matcher.from_string("::ArrayLike::#{matcher}")
+  end
+
+  exit Mutant::Runner.run(config).fail? ? 1 : 0
 end
