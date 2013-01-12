@@ -3,6 +3,11 @@
 module ArrayLike
   VERSION = "0.0.1"
 
+  def self.included(target)
+    target.send(:include, ArrayLike::ReadOnly)
+    target.send(:include, ArrayLike::Writable)
+  end
+
   # Autoload Convention
   # -------------------
   # We adhere to a strict convention for the constants in this library:

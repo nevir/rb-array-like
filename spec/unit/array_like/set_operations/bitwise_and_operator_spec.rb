@@ -1,4 +1,4 @@
-describe ArrayLike::SetOperations, "#&" do
+describe ArrayLike::SetLikeOperations, "#&" do
   include_context "shared subject"
 
   it "intersects other arrays" do

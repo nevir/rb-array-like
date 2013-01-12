@@ -1,5 +1,6 @@
 {
   "glob": ["lib/**/*.rb", "README.md"],
   "strip": ["lib/", "lib/array_like/"],
-  "github": true
+  "github": true,
+  "whitespace-after-token": false
 }

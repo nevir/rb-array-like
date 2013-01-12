@@ -8,9 +8,15 @@ shared_context "shared subject" do
 
       attr_accessor :data
 
-      def each(*args, &block)
-        @data.each(*args, &block)
+      # BaselineReadOnly, BaselineWritable
+      [:at, :each, :length].each do |sym|
+        class_eval <<-end_eval, __FILE__, __LINE__
+          def #{sym}(*args, &block)
+            @data.#{sym}(*args, &block)
+          end
+        end_eval
       end
+
     end
     klass.send :include, described_class
 

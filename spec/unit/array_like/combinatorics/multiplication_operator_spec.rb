@@ -1,4 +1,4 @@
-describe ArrayLike::SetOperations, "#*" do
+describe ArrayLike::Combinatorics, "#*" do
   include_context "shared subject"
 
   it "Concatenates when given a String" do

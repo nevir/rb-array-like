@@ -1,4 +1,4 @@
-describe ArrayLike::Coercion, "#to_ary" do
+describe ArrayLike::Enumeration, "#to_ary" do
   include_context "shared subject"
 
   it "should coerce to an array" do
