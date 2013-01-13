@@ -11,7 +11,9 @@ module ArrayLike::Combinatorics
   end
 
   def join(*args)
-    raise NotImplementedError
+    # Interestingly, `Array#join` is less efficient when it implicitly coerces
+    # each value to a string; `map` gives us the best compromise in perf.
+    Enumerator.new(self).map(&:to_s).join(*args)
   end
 
   def permutation(*args)
