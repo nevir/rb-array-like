@@ -1,3 +1,5 @@
+# ArrayLike::Inspection
+# =====================
 module ArrayLike::Inspection
   include ArrayLike::BaselineReadOnly
 

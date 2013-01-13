@@ -1,3 +1,5 @@
+# ArrayLike::SetLikeOperations
+# ============================
 module ArrayLike::SetLikeOperations
   include ArrayLike::BaselineReadOnly
   include ArrayLike::Coercion

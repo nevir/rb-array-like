@@ -1,3 +1,5 @@
+# ArrayLike::Coercion
+# ===================
 module ArrayLike::Coercion
   include ArrayLike::BaselineReadOnly
 

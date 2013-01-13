@@ -1,3 +1,5 @@
+# ArrayLike::Comparison
+# =====================
 module ArrayLike::Comparison
   include ArrayLike::BaselineReadOnly
 

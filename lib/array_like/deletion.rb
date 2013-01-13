@@ -1,3 +1,5 @@
+# ArrayLike::Deletion
+# ===================
 module ArrayLike::Deletion
   include ArrayLike::BaselineWritable
 

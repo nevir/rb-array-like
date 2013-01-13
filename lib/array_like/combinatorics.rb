@@ -1,3 +1,5 @@
+# ArrayLike::Combinatorics
+# ========================
 module ArrayLike::Combinatorics
   include ArrayLike::BaselineReadOnly
   include ArrayLike::Coercion

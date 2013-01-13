@@ -1,3 +1,5 @@
+# ArrayLike::ReadOnly
+# ===================
 module ArrayLike::ReadOnly
   include ArrayLike::Combinatorics
   include ArrayLike::Comparison

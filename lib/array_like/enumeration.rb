@@ -1,3 +1,5 @@
+# ArrayLike::Enumeration
+# ======================
 module ArrayLike::Enumeration
   include ArrayLike::BaselineReadOnly
   include Enumerable

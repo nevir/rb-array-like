@@ -1,3 +1,5 @@
+# ArrayLike::Modification
+# =======================
 module ArrayLike::Modification
   include ArrayLike::BaselineWritable
 

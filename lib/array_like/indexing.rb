@@ -1,3 +1,5 @@
+# ArrayLike::Indexing
+# ===================
 module ArrayLike::Indexing
   include ArrayLike::BaselineReadOnly
 
