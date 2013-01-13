@@ -2,20 +2,38 @@
 # =====================
 module ArrayLike::Inspection
   include ArrayLike::BaselineReadOnly
+  include ArrayLike::Coercion
 
-  def empty?(*args)
-    raise NotImplementedError
+  # empty?
+  # ------
+
+  # Returns `true` if self contains no elements.
+  def empty?
+    length == 0
   end
 
-  def frozen?(*args)
-    raise NotImplementedError
+  # to_s
+  # ----
+
+  # Returns a string representation of the elements contained within `self`.
+  def to_s
+    to_a.to_s
   end
 
-  def to_s(*args)
-    raise NotImplementedError
-  end
-  alias_method :inspect, :to_s
+  # inspect
+  # -------
 
-  alias_method :size, :length
+  # Returns an informative and human-readable, representation of `self`.
+  def inspect
+    "<#{self.class} #{to_s}>"
+  end
+
+  # size
+  # ----
+
+  # Returns the number of elements in `self`.
+  def size
+    length
+  end
 
 end
