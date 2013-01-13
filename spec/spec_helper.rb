@@ -32,6 +32,16 @@ Spork.prefork do
 
   RSpec.configure do |config|
     config.treat_symbols_as_metadata_keys_with_true_values = true
+
+    # Be verbose about warnings
+    config.around(:each) do |spec|
+      old_verbose = $VERBOSE
+      $VERBOSE = 2
+
+      spec.run
+
+      $VERBOSE = old_verbose
+    end
   end
 end
 
