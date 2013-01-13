@@ -28,7 +28,7 @@ module ArrayLike::Deletion
   #
   # If any items are found, returns `obj`, otherwise returns `nil`.
   # If a block is given, returns the result of block if the item is not found.
-  def delete(obj, &block)
+  def delete#(obj, &block)
     raise NotImplementedError
   end
 
@@ -37,7 +37,7 @@ module ArrayLike::Deletion
 
   # Deletes the element at the specified index, returning that element, or `nil`
   # if the index is out of range.
-  def delete_at(index)
+  def delete_at#(index)
     raise NotImplementedError
   end
 
@@ -48,7 +48,7 @@ module ArrayLike::Deletion
   # that is given a value of `true` from the block.
   #
   # If no block is given, an enumerator is returned instead.
-  def delete_if(&block)
+  def delete_if#(&block)
     raise NotImplementedError
   end
 
@@ -59,7 +59,7 @@ module ArrayLike::Deletion
   # that is given a value of `false` from the block.
   #
   # If no block is given, an enumerator is returned instead.
-  def keep_if(&block)
+  def keep_if#(&block)
     raise NotImplementedError
   end
 
@@ -71,7 +71,7 @@ module ArrayLike::Deletion
   #
   # If a number `n` is given, removes `n` items from the end of the array and
   # returns them.
-  def pop(n=nil)
+  def pop#(n=nil)
     raise NotImplementedError
   end
 
@@ -80,7 +80,7 @@ module ArrayLike::Deletion
 
   # Identical to [`delete_if`](#delete_if), except that `nil` is returned if no
   # elements were removed.
-  def reject!(&block)
+  def reject!#(&block)
     raise NotImplementedError
   end
 
@@ -89,7 +89,7 @@ module ArrayLike::Deletion
 
   # Identical to [`keep_if`](#keep_if), except that `nil` is returned if no
   # elements were removed.
-  def select!(&block)
+  def select!#(&block)
     raise NotImplementedError
   end
 
@@ -101,7 +101,7 @@ module ArrayLike::Deletion
   #
   # If a number `n` is given, removes `n` items from the start of the array and
   # returns them.
-  def shift(n=nil)
+  def shift#(n=nil)
     raise NotImplementedError
   end
 
@@ -113,7 +113,7 @@ module ArrayLike::Deletion
   #
   # Returns the deleted object (or objects), or `nil` if the index is out of
   # range.
-  def slice!(*args)
+  def slice!#(*args)
     raise NotImplementedError
   end
 
