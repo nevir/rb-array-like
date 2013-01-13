@@ -42,12 +42,6 @@ module ArrayLike::Enumeration
     raise NotImplementedError
   end
 
-  # Too many other functions make the assumption that this returns an explicit
-  # `Array`; it doesn't look like we can take advantage of implicit coercion.
-  #
-  # http://bugs.ruby-lang.org/issues/7657 for example.
-  alias_method :to_ary, :to_a
-
   def uniq(*args)
     raise NotImplementedError
   end

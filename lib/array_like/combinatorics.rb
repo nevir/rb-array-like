@@ -1,6 +1,6 @@
 module ArrayLike::Combinatorics
   include ArrayLike::BaselineReadOnly
-  include ArrayLike::Enumeration
+  include ArrayLike::Coercion
 
   def *(value)
     to_a * value

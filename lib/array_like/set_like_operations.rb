@@ -1,6 +1,6 @@
 module ArrayLike::SetLikeOperations
   include ArrayLike::BaselineReadOnly
-  include ArrayLike::Enumeration
+  include ArrayLike::Coercion
 
   def &(other)
     to_a & other
