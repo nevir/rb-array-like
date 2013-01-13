@@ -4,39 +4,96 @@ module ArrayLike::Combinatorics
   include ArrayLike::BaselineReadOnly
   include ArrayLike::Coercion
 
+  # *
+  # -
+
+  # If an `Integer` value is given, returns a new `Array` built by concatenating
+  # `value` copies of `self` together.
+  #
+  # If a `String` is given, the result is equivalent to `join(value)`.
   def *(value)
+    return join(value) if value.is_a? String
+
     to_a * value
   end
 
-  def combination(*args, &block)
-    to_a.combination(*args, &block)
+  # combination
+  # -----------
+
+  # Computes all combinations of `length` elements.
+  #
+  # If a block is given, each combination is yielded to the block.  If no block
+  # is given, an `Enumerator` for the combinations is returned.
+  def combination(length, &block)
+    to_a.combination(length, &block)
   end
 
-  def join(*args)
+  # join
+  # ----
+
+  # Returns a `String` created by converting each element to a `string`,
+  # separated by `sep`.
+  def join(sep=$,)
     # Interestingly, `Array#join` is less efficient than a `map` when it
     # implicitly coerces each value to a string.  We make the assumption that
     # users of `ArrayLike` are typically not managing `String`s.
-    Enumerator.new(self).map(&:to_s).join(*args)
+    Enumerator.new(self).map(&:to_s).join(sep)
   end
 
-  def permutation(*args, &block)
-    to_a.permutation(*args, &block)
+  # permutation
+  # -----------
+
+  # Computes all permutations of `length` elements.
+  #
+  # If a block is given, each permutation is yielded to the block.  If no block
+  # is given, an `Enumerator` for the permutations is returned.
+  def permutation(length=nil, &block)
+    to_a.permutation(length, &block)
   end
 
-  def product(*args, &block)
-    to_a.product(*args, &block)
+  # product
+  # -------
+
+  # Computes all combinations of `length` elements between `self` and the given
+  # array(s).
+  #
+  # If a block is given, each combination is yielded to the block.  If no block
+  # is given, an `Enumerator` for the combinations is returned.
+  def product(*other_arrays, &block)
+    to_a.product(*other_arrays, &block)
   end
 
-  def repeated_combination(*args, &block)
-    to_a.repeated_combination(*args, &block)
+  # repeated_combination
+  # --------------------
+
+  # Computes all combinations of `length` elements, including combinations with
+  # the same element repeated.
+  #
+  # If a block is given, each combination is yielded to the block.  If no block
+  # is given, an `Enumerator` for the combinations is returned.
+  def repeated_combination(length, &block)
+    to_a.repeated_combination(length, &block)
   end
 
-  def repeated_permutation(*args, &block)
-    to_a.repeated_permutation(*args, &block)
+  # repeated_permutation
+  # --------------------
+
+  # Computes all permutations of `length` elements, including permutations with
+  # the same element repeated.
+  #
+  # If a block is given, each permutation is yielded to the block.  If no block
+  # is given, an `Enumerator` for the permutations is returned.
+  def repeated_permutation(length, &block)
+    to_a.repeated_permutation(length, &block)
   end
 
-  def transpose(*args)
-    to_a.transpose(*args)
+  # transpose
+  # ---------
+
+  # Assumes that `self` contains only `Array`s of the same length, and
+  # transposes the rows and columns.
+  def transpose
+    to_a.transpose
   end
 
 end
