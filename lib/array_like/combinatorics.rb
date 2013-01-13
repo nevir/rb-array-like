@@ -37,7 +37,7 @@ module ArrayLike::Combinatorics
     # Interestingly, `Array#join` is less efficient than a `map` when it
     # implicitly coerces each value to a string.  We make the assumption that
     # users of `ArrayLike` are typically not managing `String`s.
-    Enumerator.new(self).map(&:to_s).join(sep)
+    to_enum.map(&:to_s).join(sep)
   end
 
   # permutation

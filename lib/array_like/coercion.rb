@@ -14,7 +14,7 @@ module ArrayLike::Coercion
     #
     # This provides us with the same performance characteristics, but without
     # forcing `Enumerable` to be included if you don't wish it
-    Enumerator.new(self).to_a
+    to_enum.to_a
   end
   alias_method :entries, :to_a
 

@@ -22,7 +22,7 @@ end
 
 class WithEnumerator < Base
   def to_a
-    Enumerator.new(self).to_a
+    to_enum.to_a
   end
 end
 

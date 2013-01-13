@@ -36,7 +36,7 @@ class Tester
   end
 
   def map_join
-    Enumerator.new(self).map(&:to_s).join(SEPARATOR)
+    to_enum.map(&:to_s).join(SEPARATOR)
   end
 end
 
