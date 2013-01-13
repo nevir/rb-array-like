@@ -29,4 +29,19 @@ guard "rspec", cli: '--drb --drb-port 2732' do
 
   watch(%r{^lib/(.+)\.rb$}) { |m| "spec/unit/#{m[1]}_spec.rb" }
   watch(%r{^lib/(.+)\.rb$}) { |m| Dir["spec/unit/#{m[1]}/*_spec.rb"] }
+
+  # Run dependent modules, too
+  watch(%r{^lib/(.+)\.rb$}) { |m|
+    mod_name = m[1].split(File::SEPARATOR).map { |p| p.split("_").map(&:capitalize).join }.join("::")
+
+    dependents = Dir["lib/array_like/**/*.rb"].select { |path|
+      open(path).read.include?("include #{mod_name}")
+    }
+
+    dependents.map { |path|
+      path = path[%r{^lib/(.+)\.rb$}, 1]
+
+      ["spec/unit/#{path}_spec.rb", Dir["spec/unit/#{path}/*_spec.rb"]]
+    }.flatten
+  }
 end
