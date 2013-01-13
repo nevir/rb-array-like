@@ -48,7 +48,8 @@ module ArrayLike::Combinatorics
   # If a block is given, each permutation is yielded to the block.  If no block
   # is given, an `Enumerator` for the permutations is returned.
   def permutation(length=nil, &block)
-    to_a.permutation(length, &block)
+    # MRI accepts `nil` as no arg, Rubinius and JRuby don't.
+    to_a.permutation(*[length].compact, &block)
   end
 
   # product
