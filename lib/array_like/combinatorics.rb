@@ -6,8 +6,8 @@ module ArrayLike::Combinatorics
     to_a * value
   end
 
-  def combination(*args)
-    raise NotImplementedError
+  def combination(*args, &block)
+    to_a.combination(*args, &block)
   end
 
   def join(*args)
