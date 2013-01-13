@@ -56,7 +56,9 @@ task :mutate do
     config.merge!(
       strategy: Mutant::Strategy::Rspec::DM2.new(config),
       killer:   Mutant::Killer::Rspec,
-      matcher:  Mutant::Matcher::ObjectSpace.new(/\AArrayLike::/),
+      matcher:  Mutant::Matcher::ObjectSpace.new(/\AArrayLike::(Coercion|Combinatorics|Comparison)/),
+      # In the future, a blacklist:
+      # matcher:  Mutant::Matcher::ObjectSpace.new(/\AArrayLike::(?!(BaselineReadOnly|BaselineWritable|ReadOnly|Writable))/),
       filter:   Mutant::Mutation::Filter::ALL,
       reporter: Mutant::Reporter::CLI.new(config),
     )
