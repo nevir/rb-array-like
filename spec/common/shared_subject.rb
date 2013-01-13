@@ -2,8 +2,8 @@ shared_context "shared subject" do
 
   let(:subject_class) {
     klass = Class.new do
-      def initialize
-        @data = [0, 1, 1, 2, 3, 5, 8, 13]
+      def initialize(data)
+        @data = data
       end
 
       attr_accessor :data
@@ -28,7 +28,7 @@ shared_context "shared subject" do
   }
 
   subject {
-    subject_class.new
+    subject_class.new([0, 1, 1, 2, 3, 5, 8, 13])
   }
 
 end
