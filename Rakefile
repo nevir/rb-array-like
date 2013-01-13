@@ -10,7 +10,7 @@ desc "Run the full test suite"
 task :default => [:coverage, :mutate]
 
 desc "Run the tests in CI mode"
-task :ci => [:spec, :mutate]
+task :ci => [:spec]#, :mutate]
 
 desc "Run tests with code coverage"
 task :spec_with_coverage do
