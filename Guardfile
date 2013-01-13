@@ -27,8 +27,9 @@ guard "rspec", cli: '--drb --drb-port 2732' do
 
   watch(%r{^spec/.+_spec\.rb$})
 
-  watch(%r{^lib/(.+)\.rb$}) { |m| "spec/unit/#{m[1]}_spec.rb" }
-  watch(%r{^lib/(.+)\.rb$}) { |m| Dir["spec/unit/#{m[1]}/*_spec.rb"] }
+  watch(%r{^lib/(.+)\.rb$}) { |m|
+    ["spec/unit/#{m[1]}_spec.rb", Dir["spec/unit/#{m[1]}/*_spec.rb"]].flatten
+  }
 
   # Run dependent modules, too
   watch(%r{^lib/(.+)\.rb$}) { |m|
