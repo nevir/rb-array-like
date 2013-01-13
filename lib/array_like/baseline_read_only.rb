@@ -13,7 +13,7 @@ module ArrayLike::BaselineReadOnly
   # A negative index counts from the end of `self`. Returns `nil` if the index
   # is out of range.
   def at(index)
-    raise NotImplementedError, "#{self}#at must be implemented for ArrayLike::ReadOnly methods!"
+    raise NotImplementedError, "#{self.class}#at must be implemented for ArrayLike::ReadOnly methods!"
   end
 
   # #each
@@ -24,7 +24,7 @@ module ArrayLike::BaselineReadOnly
   #
   # If no block is given, an enumerator is returned instead.
   def each
-    raise NotImplementedError, "#{self}#each must be implemented for ArrayLike::ReadOnly methods!"
+    raise NotImplementedError, "#{self.class}#each must be implemented for ArrayLike::ReadOnly methods!"
   end
 
   # #length
@@ -35,7 +35,7 @@ module ArrayLike::BaselineReadOnly
   # While technically not required, not providing `length` would dramatically
   # hamper performance.
   def length
-    raise NotImplementedError, "#{self}#length must be implemented for ArrayLike::ReadOnly methods!"
+    raise NotImplementedError, "#{self.class}#length must be implemented for ArrayLike::ReadOnly methods!"
   end
 
 end
