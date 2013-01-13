@@ -20,12 +20,12 @@ module ArrayLike::Combinatorics
   # combination
   # -----------
 
-  # Computes all combinations of `length` elements.
+  # Computes all combinations of `len` elements.
   #
   # If a block is given, each combination is yielded to the block.  If no block
   # is given, an `Enumerator` for the combinations is returned.
-  def combination(length, &block)
-    to_a.combination(length, &block)
+  def combination(len, &block)
+    to_a.combination(len, &block)
   end
 
   # join
@@ -43,19 +43,19 @@ module ArrayLike::Combinatorics
   # permutation
   # -----------
 
-  # Computes all permutations of `length` elements.
+  # Computes all permutations of `len` elements.
   #
   # If a block is given, each permutation is yielded to the block.  If no block
   # is given, an `Enumerator` for the permutations is returned.
-  def permutation(length=nil, &block)
+  def permutation(len=nil, &block)
     # MRI accepts `nil` as no arg, Rubinius and JRuby don't.
-    to_a.permutation(*[length].compact, &block)
+    to_a.permutation(*[len].compact, &block)
   end
 
   # product
   # -------
 
-  # Computes all combinations of `length` elements between `self` and the given
+  # Computes all combinations of `len` elements between `self` and the given
   # array(s).
   #
   # If a block is given, each combination is yielded to the block.  If no block
@@ -67,25 +67,25 @@ module ArrayLike::Combinatorics
   # repeated_combination
   # --------------------
 
-  # Computes all combinations of `length` elements, including combinations with
+  # Computes all combinations of `len` elements, including combinations with
   # the same element repeated.
   #
   # If a block is given, each combination is yielded to the block.  If no block
   # is given, an `Enumerator` for the combinations is returned.
-  def repeated_combination(length, &block)
-    to_a.repeated_combination(length, &block)
+  def repeated_combination(len, &block)
+    to_a.repeated_combination(len, &block)
   end
 
   # repeated_permutation
   # --------------------
 
-  # Computes all permutations of `length` elements, including permutations with
+  # Computes all permutations of `len` elements, including permutations with
   # the same element repeated.
   #
   # If a block is given, each permutation is yielded to the block.  If no block
   # is given, an `Enumerator` for the permutations is returned.
-  def repeated_permutation(length, &block)
-    to_a.repeated_permutation(length, &block)
+  def repeated_permutation(len, &block)
+    to_a.repeated_permutation(len, &block)
   end
 
   # transpose
