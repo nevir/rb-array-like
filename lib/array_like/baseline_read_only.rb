@@ -18,16 +18,6 @@ module ArrayLike::BaselineReadOnly
     raise NotImplementedError, "#{self.class}#at must be implemented for ArrayLike::ReadOnly methods!"
   end
 
-  # ### each
-
-  # Calls the given block once for each element in `self`, passing that element
-  # as a parameter.
-  #
-  # If no block is given, an enumerator is returned instead.
-  def each
-    raise NotImplementedError, "#{self.class}#each must be implemented for ArrayLike::ReadOnly methods!"
-  end
-
   # ### length
 
   # Returns the number of elements in `self`.
@@ -40,6 +30,27 @@ module ArrayLike::BaselineReadOnly
 
   # Optional Methods
   # ----------------
+
+  # ### each
+
+  # Calls the given block once for each element in `self`, passing that element
+  # as a parameter.
+  #
+  # If no block is given, an enumerator is returned instead.
+  def each
+    return to_enum unless block_given?
+
+    max_index = length - 1
+    return self if max_index < 0
+
+    index = 0
+    while index <= max_index
+      yield at(index)
+      index += 1
+    end
+
+    self
+  end
 
   # Enumerates all elements beginning at the `start_at` index and ending at the
   # element at the `stop_at` index (i.e. inclusive).

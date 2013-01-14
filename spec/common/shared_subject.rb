@@ -9,7 +9,7 @@ shared_context "shared subject" do
       attr_accessor :data
 
       # BaselineReadOnly, BaselineWritable
-      [:at, :each, :length].each do |sym|
+      [:at, :length].each do |sym|
         class_eval <<-end_eval, __FILE__, __LINE__
           def #{sym}(*args, &block)
             @data.#{sym}(*args, &block)
