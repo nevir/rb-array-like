@@ -27,6 +27,10 @@ guard "rspec", cli: '--drb --drb-port 2732' do
 
   watch(%r{^spec/.+_spec\.rb$})
 
+  watch(%r{^spec/(.+)/shared\.rb$}) { |m|
+    ["spec/#{m[1]}_spec.rb", Dir["spec/#{m[1]}/*_spec.rb"]].flatten
+  }
+
   watch(%r{^lib/(.+)\.rb$}) { |m|
     ["spec/unit/#{m[1]}_spec.rb", Dir["spec/unit/#{m[1]}/*_spec.rb"]].flatten
   }
