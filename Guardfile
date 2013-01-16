@@ -6,6 +6,10 @@ GLOBAL_SPEC_FILES = [
   "lib/array_like.rb",
 ]
 
+def specs_for_path(path)
+  ["spec/unit/#{path}_spec.rb", Dir["spec/unit/#{path}/**/*_spec.rb"]].flatten
+end
+
 guard "bundler" do
   watch("Gemfile")
   watch(/^.+\.gemspec/)
@@ -27,13 +31,8 @@ guard "rspec", cli: '--drb --drb-port 2732' do
 
   watch(%r{^spec/.+_spec\.rb$})
 
-  watch(%r{^spec/(.+)/shared\.rb$}) { |m|
-    ["spec/#{m[1]}_spec.rb", Dir["spec/#{m[1]}/*_spec.rb"]].flatten
-  }
-
-  watch(%r{^lib/(.+)\.rb$}) { |m|
-    ["spec/unit/#{m[1]}_spec.rb", Dir["spec/unit/#{m[1]}/*_spec.rb"]].flatten
-  }
+  watch(%r{^spec/(.+)/shared\.rb$}) { |m| specs_for_path(m[1]) }
+  watch(%r{^lib/(.+)\.rb$})         { |m| specs_for_path(m[1]) }
 
   # Run dependent modules, too
   watch(%r{^lib/(.+)\.rb$}) { |m|
@@ -43,10 +42,6 @@ guard "rspec", cli: '--drb --drb-port 2732' do
       open(path).read.include?("include #{mod_name}")
     }
 
-    dependents.map { |path|
-      path = path[%r{^lib/(.+)\.rb$}, 1]
-
-      ["spec/unit/#{path}_spec.rb", Dir["spec/unit/#{path}/*_spec.rb"]]
-    }.flatten
+    dependents.map { |p| specs_for_path(p[%r{^lib/(.+)\.rb$}, 1]) }.flatten
   }
 end
