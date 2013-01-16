@@ -54,4 +54,10 @@ describe ArrayLike::Slicable, ".new_slice" do
     target_class.new_slice
   end
 
+  it "should not freak out w/ unnamed modules" do
+    target_class.send(:include, Module.new)
+
+    target_class.new_slice
+  end
+
 end

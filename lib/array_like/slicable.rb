@@ -8,13 +8,13 @@ module ArrayLike::Slicable
     # included into your collection.  This allows each slice to behave very
     # closely to your overall collection.
     INHERITED_SLICE_MODULES = [
-      "Coercion",
-      "Combinatorics",
-      "Comparison",
-      "Enumeration",
-      "Indexing",
-      "Inspection",
-      "SetLikeOperations",
+      :Coercion,
+      :Combinatorics,
+      :Comparison,
+      :Enumeration,
+      :Indexing,
+      :Inspection,
+      :SetLikeOperations,
     ]
 
     attr_accessor :slice_class_initialized
@@ -25,7 +25,7 @@ module ArrayLike::Slicable
       # whitelisted by `INHERITED_SLICE_MODULES`.
       unless slice_class_initialized
         included_modules.each do |mod|
-          if mod.name && INHERITED_SLICE_MODULES.include?(mod.name[/ArrayLike::(.+)/, 1])
+          if mod.name && INHERITED_SLICE_MODULES.include?(mod.name.sub(/^ArrayLike::/, "").to_sym)
             self::Slice.send(:include, mod)
           end
         end
