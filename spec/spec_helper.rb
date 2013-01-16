@@ -36,7 +36,8 @@ Spork.prefork do
     # Be verbose about warnings
     config.around(:each) do |spec|
       old_verbose = $VERBOSE
-      $VERBOSE = 2
+      # Or not at all if we are in mutation testing
+      $VERBOSE = ENV["MUTATION"] ? nil : 2
 
       spec.run
 

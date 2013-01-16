@@ -68,6 +68,7 @@ task :mutate do
       config[:matcher] = Mutant::Matcher.from_string("::ArrayLike::#{matcher}")
     end
 
+    ENV["MUTATION"] = "yes"
     exit Mutant::Runner.run(config).fail? ? 1 : 0
   end
 end
