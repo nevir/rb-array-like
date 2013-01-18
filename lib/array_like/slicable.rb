@@ -17,20 +17,18 @@ module ArrayLike::Slicable
       :SetLikeOperations,
     ]
 
-    attr_accessor :slice_class_initialized
-
     # Constructs a new slice.
     def new_slice(*args)
       # It also lazy-initializes the `Slice` subclass with the modules that are
       # whitelisted by `INHERITED_SLICE_MODULES`.
-      unless slice_class_initialized
+      unless defined? @_slice_class_initialized
         included_modules.each do |mod|
           if mod.name && INHERITED_SLICE_MODULES.include?(mod.name.sub(/^ArrayLike::/, "").to_sym)
             self::Slice.send(:include, mod)
           end
         end
 
-        self.slice_class_initialized = true
+        @_slice_class_initialized = true
       end
 
       self::Slice.new(*args)

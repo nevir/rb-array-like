@@ -60,4 +60,10 @@ describe ArrayLike::Slicable, ".new_slice" do
     target_class.new_slice
   end
 
+  it "should appease mutant" do
+    target_class.new_slice
+
+    target_class.instance_variable_get(:@_slice_class_initialized).should be_true
+  end
+
 end
